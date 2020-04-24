@@ -46,6 +46,8 @@ flutter:
     - assets/images/spiderman.jpg
     - assets/images/superman.jpg
     - assets/images/wolwerine.jpg
+    - assets/images/captainamerica.jpg
+    - assets/comics.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

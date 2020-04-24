@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import '../../models/comic.dart';
+import 'dart:convert';
 
-class Home extends StatelessWidget {
 
+class Home extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    return new HomeState();
+  }
+
+}
+
+class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return _buildHome();
@@ -10,12 +20,34 @@ class Home extends StatelessWidget {
 
   Widget _buildHome(){
     return Scaffold(
-      body:  _buildCard(),
+      body:  _buildListCard(),
       appBar: _buildAppBar(),
     );
   }
-  
-  Widget _buildCard(){
+
+  Widget _buildListCard(){
+    //async code with dart
+    //https://youtu.be/OTS-ap9_aXc
+    //https://dart.dev/codelabs/async-await#what-is-a-future
+    //Future is used to request async
+    //Só carregado os dados após terminar a requisição
+    return FutureBuilder<String>(
+      future: DefaultAssetBundle.of(context).loadString('assets/comics.json'),
+      builder: (context, snapshot) {
+        List<dynamic> comics = json.decode(snapshot.data.toString());
+
+        return ListView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            Comic comic = Comic.fromJson(comics[index]);
+            return _buildCard(comic.title, comic.image);
+          },
+          itemCount: comics == null ? 0 : comics.length,
+        );
+      },
+    );
+  }
+
+  Widget _buildCard(title, image){
     return SizedBox(
         height: 300,
         child: Card(
@@ -24,8 +56,9 @@ class Home extends StatelessWidget {
             children: <Widget>[
               Stack(
                   children: <Widget>[
-                    _buildImageCard(),
-                    _buildTextCard()
+                    _buildImageCard(image),
+                    _buildGradient(),
+                    _buildTextCard(title)
                   ]
               )
             ],
@@ -33,17 +66,34 @@ class Home extends StatelessWidget {
         ));
   }
 
-  Widget _buildTextCard(){
-    return  Positioned(
-        bottom:10,
-        left:10,
-        child:Text('IRON MAN', style: TextStyle(fontSize: 25, color: Colors.white, decorationStyle: TextDecorationStyle.solid, fontWeight: FontWeight.bold),)
+  //https://api.flutter.dev/flutter/painting/LinearGradient-class.html
+  Widget _buildGradient(){
+    return Container(
+      height: 268,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: FractionalOffset.topCenter,
+          end: FractionalOffset.bottomCenter,
+          colors: [
+            Colors.transparent,
+            Colors.deepPurple.withOpacity(0.7)
+          ]
+        )
+      ),
     );
   }
 
-  Widget _buildImageCard(){
-    return  Image.network(
-        'https://lh3.googleusercontent.com/proxy/zzKE5IskSx74i62UqPZQX2-Gv0X2gGUwvJT6SOPTFnL3mT4f79C_uD3G4CqyvzKKmVglTAbtdPJEBnVjffJCJh1Ihu72GNdBkSeulouESv_XxzTYy1W_opK2ubpfv_wTNFLn6RE1gSeHLU4E639TFuoA-UM', fit: BoxFit.cover, height: 268, width: 400);
+  Widget _buildTextCard(title){
+    return  Positioned(
+        bottom:10,
+        left:10,
+        child:Text(title, style: TextStyle(fontSize: 18, color: Colors.white, decorationStyle: TextDecorationStyle.solid, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),)
+    );
+  }
+
+  Widget _buildImageCard(image){
+    return  Image.asset(
+        image, fit: BoxFit.cover, height: 268, width: 400);
   }
 
   Widget _buildAppBar(){
