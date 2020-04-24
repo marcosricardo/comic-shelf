@@ -11,36 +11,26 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
       ),
       home: Scaffold(
-        body:
-        ListView(
-          padding: const EdgeInsets.all(8),
-          children: <Widget>[
-            Container(
-              height: 200,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Card(
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Image.network('https://hqrock.files.wordpress.com/2012/02/iron-man-128-demon-in-a-bottle.jpg'),
-                        ),
-                      ),
-
-                      Expanded(
-                          child: Text("Demon in a Bottle is a nine-issue story arc from the comic book series The Invincible Iron Man (vol. 1), published in issues 120 through 128 in 1979 by Marvel Comics. It was written by David Michelinie and Bob Layton and illustrated by John Romita, Jr., Bob Layton, and Carmine Infantino...", overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold), maxLines:10)
-                      ),
-
-                    ],
+        body: SizedBox(
+            height: 300,
+            child: Card(
+              margin: EdgeInsets.all(16),
+              child: Column(
+                children: <Widget>[
+                  Stack(
+                   children: <Widget>[
+                     Image.network(
+                       'https://lh3.googleusercontent.com/proxy/zzKE5IskSx74i62UqPZQX2-Gv0X2gGUwvJT6SOPTFnL3mT4f79C_uD3G4CqyvzKKmVglTAbtdPJEBnVjffJCJh1Ihu72GNdBkSeulouESv_XxzTYy1W_opK2ubpfv_wTNFLn6RE1gSeHLU4E639TFuoA-UM', fit: BoxFit.cover, height: 268, width: 400,),
+                     Positioned(
+                         bottom:10,
+                         left:10,
+                         child:Text('IRON MAN', style: TextStyle(fontSize: 25, color: Colors.white, decorationStyle: TextDecorationStyle.solid, fontWeight: FontWeight.bold),)
+                     )
+                    ]
                   )
-                ),
+                ],
               ),
-            ),
-          ],
-        ),
+        )),
         appBar: AppBar(title: Text('Comic shelf')),
       ),
     );
