@@ -11,7 +11,7 @@
     "title": "Captain america - The first avenger",
     "brand": "MARVEL",
     "numberOfpages":"600",
-    "typeOfCover":"Dura",
+    "typeOfCover":"Não informado",
     "releaseDate": "01/10/1987",
     "image": "assets/images/captainamerica.jpg"
   },
@@ -19,7 +19,7 @@
     "title": "Spider man - Far from home",
     "brand": "MARVEL",
     "numberOfpages":"516",
-    "typeOfCover":"Dura",
+    "typeOfCover":"Não informado",
     "releaseDate": "01/10/2011",
     "image": "assets/images/spiderman.jpg"
   },
@@ -34,8 +34,8 @@
   {
     "title": "Wolwerine - immortal",
     "brand": "MARVEL",
-    "numberOfpages":"800",
-    "typeOfCover":"Dura",
+    "numberOfpages":"1200",
+    "typeOfCover":"Papel",
     "releaseDate": "01/10/1965",
     "image": "assets/images/wolwerine.jpg"
   }

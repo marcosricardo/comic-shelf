@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/comic.dart';
 import 'dart:convert';
-
+import '../details/details.dart';
 
 class Home extends StatefulWidget {
 
@@ -29,8 +29,6 @@ class HomeState extends State<Home> {
     //async code with dart
     //https://youtu.be/OTS-ap9_aXc
     //https://dart.dev/codelabs/async-await#what-is-a-future
-    //Future is used to request async
-    //Só carregado os dados após terminar a requisição
     return FutureBuilder<String>(
       future: DefaultAssetBundle.of(context).loadString('assets/comics.json'),
       builder: (context, snapshot) {
@@ -39,7 +37,7 @@ class HomeState extends State<Home> {
         return ListView.builder(
           itemBuilder: (BuildContext context, int index) {
             Comic comic = Comic.fromJson(comics[index]);
-            return _buildCard(comic.title, comic.image);
+            return _buildCard(comic);
           },
           itemCount: comics == null ? 0 : comics.length,
         );
@@ -47,23 +45,30 @@ class HomeState extends State<Home> {
     );
   }
 
-  Widget _buildCard(title, image){
-    return SizedBox(
-        height: 300,
-        child: Card(
-          margin: EdgeInsets.all(16),
-          child: Column(
-            children: <Widget>[
-              Stack(
-                  children: <Widget>[
-                    _buildImageCard(image),
-                    _buildGradient(),
-                    _buildTextCard(title)
-                  ]
-              )
-            ],
-          ),
+  Widget _buildCard(comic){
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) => Details(comic: comic)
         ));
+      },
+      child: SizedBox(
+          height: 300,
+          child: Card(
+            margin: EdgeInsets.all(16),
+            child: Column(
+              children: <Widget>[
+                Stack(
+                    children: <Widget>[
+                      _buildImageCard(comic.image),
+                      _buildGradient(),
+                      _buildTextCard(comic.title)
+                    ]
+                )
+              ],
+            ),
+          )),
+    );
   }
 
   //https://api.flutter.dev/flutter/painting/LinearGradient-class.html

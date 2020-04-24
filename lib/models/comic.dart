@@ -1,4 +1,5 @@
-class Comic {
+class Comic {  //model
+  //design design patterns OO
   String title;
   String brand;
   String numberOfpages;
